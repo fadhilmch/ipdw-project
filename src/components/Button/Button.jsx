@@ -5,12 +5,13 @@ const isRegularType = type => ['reset', 'submit', 'button'].includes(type);
 
 const Button = ({
   className = 'btn',
+  defaultPushed = false,
   disabled = false,
   text = '',
   type = 'button',
   ...props
 }) => {
-  const [pushed, setPushed] = useState(false);
+  const [pushed, setPushed] = useState(defaultPushed);
 
   return (
     <button
@@ -34,6 +35,7 @@ const Button = ({
 
 Button.propTypes = {
   className: PropTypes.string,
+  defaultPushed: PropTypes.bool,
   disabled: PropTypes.bool,
   id: PropTypes.string,
   onClick: PropTypes.func,
