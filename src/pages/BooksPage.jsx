@@ -19,6 +19,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import Loader from '../components/Loader/Loader';
 import SearchResults from '../components/Books/SearchResults';
 import FilterGroup from '../components/Books/FilterGroup';
+import {filterBooksByType} from './bookTypeFilter';
 import {algoliaIndex, algoliaEnabled} from '../algolia';
 import {useFirebase} from '../components/Firebase';
 import {getDocs} from 'firebase/firestore';
@@ -37,10 +38,8 @@ const BooksPage = props => {
   const getBooksFromFirestore = filter => {
     getDocs(firebase.books())
       .then(snap => {
-        let books = snap.docs.map(d => ({id: d.id, ...d.data()}));
-        const typeMatch = /type:(lend|give)/.exec(filter || '');
-        if (typeMatch) books = books.filter(b => b.type === typeMatch[1]);
-        props.storeBooks(withDistance(books, props.coords));
+        const books = snap.docs.map(d => ({id: d.id, ...d.data()}));
+        props.storeBooks(withDistance(filterBooksByType(books, filter), props.coords));
         setTotalPages(1);
       })
       .catch(err => {
