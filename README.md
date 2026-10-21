@@ -6,7 +6,7 @@ An endeavour for the *Interaction Programming and Dynamic Web* course, 2019 at K
 
 One command runs the whole app locally against the Firebase Emulator Suite with seeded sample data - no Firebase project, Algolia account, or Google Maps key needed. Ideal for recording a demo video.
 
-Prerequisites: Node.js 20+ and Java 21+ (the Firebase emulators need Java).
+Prerequisites: Node.js 22+ (verified on Node 22; some Firebase packages print engine warnings below Node 24, but install and the demo run fine) and Java 21+ (the Firebase emulators need Java).
 
 ```bash
 npm install
@@ -28,6 +28,8 @@ Demo mode details:
 
 - All data lives in the local emulators and vanishes when they stop; nothing touches a production project.
 - Without Algolia keys, the book shelf lists books straight from Firestore. Without a Google Maps key, a static placeholder replaces the map. Facebook login is hidden in demo mode.
+- Book photos and user avatars in the seed data are random placeholder images from picsum.photos, not real book covers - fetching real covers would need the Goodreads/Algolia keys the demo avoids.
+- Running the test suite (`npx vitest run`) shares the emulator auth store: the emulator tests create a fixed account, so they pass once per fresh emulator. Restart the emulators (or delete the accounts via the Auth emulator REST endpoint) before re-running tests.
 - To use the real backends instead, copy `.env.example` to `.env.local`, fill in your keys, and run `npm run dev`. The demo fallbacks switch off automatically when real keys are present.
 
 ## https://bookio-5c798.firebaseapp.com/
@@ -243,3 +245,4 @@ structure of the folders is the standard best-practice structure for Redux.
   - `variables/`
   - `\_base.scss`
   - `\_variables.scss`
+
