@@ -1,6 +1,28 @@
 // One-command recordable demo: Firebase emulators + seed data + dev server.
 // Usage: npm run demo    (then open http://localhost:5173)
 import {spawn} from 'node:child_process';
+import {existsSync, writeFileSync} from 'node:fs';
+
+// Demo config: written on first run so no manual setup is needed. Points the
+// app at the local emulators only - never a real Firebase project.
+if (!existsSync('.env.demo')) {
+  writeFileSync('.env.demo', `VITE_USE_EMULATORS=true
+VITE_FIREBASE_API_KEY=demo-api-key
+VITE_FIREBASE_AUTH_DOMAIN=demo-bookio-test.firebaseapp.com
+VITE_FIREBASE_DATABASE_URL=https://demo-bookio-test.firebaseio.com
+VITE_FIREBASE_PROJECT_ID=demo-bookio-test
+VITE_FIREBASE_STORAGE_BUCKET=demo-bookio-test.appspot.com
+VITE_FIREBASE_MESSAGING_SENDER_ID=000000000000
+VITE_FIREBASE_APP_ID=1:000000000000:web:demo
+VITE_CONFIRMATION_EMAIL_REDIRECT=http://localhost:5173
+VITE_DEFAULT_PORTRAIT=https://picsum.photos/seed/bookio-portrait/200/200
+# Optional: fill real keys in .env.local to use live Algolia/Maps instead.
+VITE_ALGOLIA_APP_ID=
+VITE_ALGOLIA_SEARCH_KEY=
+VITE_GOOGLE_MAPS_API_KEY=
+`);
+  console.log('Wrote .env.demo (emulator-only demo config)');
+}
 
 const waitFor = async (url, timeoutMs = 90000) => {
   const start = Date.now();
@@ -15,7 +37,7 @@ const waitFor = async (url, timeoutMs = 90000) => {
   throw new Error(`Timed out waiting for ${url} - is Java 21+ installed? (Firebase emulators need it)`);
 };
 
-const emulators = spawn('npx', ['firebase', 'emulators:start', '--only', 'auth,firestore,storage'], {
+const emulators = spawn('npx', ['firebase', 'emulators:start', '--project', 'demo-bookio-test', '--only', 'auth,firestore,storage'], {
   stdio: ['ignore', 'inherit', 'inherit']
 });
 
