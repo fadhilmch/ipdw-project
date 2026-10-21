@@ -105,7 +105,10 @@ const SignInFormBase = props => {
   };
 
   const onValidate = error => {
-    dispatchError({code: error.code || 'error', message: error.message || String(error)});
+    // The Validator passes a field->message map (e.g. {email: '...'}), not a
+    // submission error. Keep the per-field messages so they render under their
+    // inputs, and clear any stale submission error while the user edits.
+    dispatchError({code: '', message: '', ...error});
   };
 
   const onSubmit = e => {
