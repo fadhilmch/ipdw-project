@@ -6,6 +6,8 @@ An endeavour for the *Interaction Programming and Dynamic Web* course, 2019 at K
 
 One command runs the whole app locally against the Firebase Emulator Suite with seeded sample data - no Firebase project, Algolia account, or Google Maps key needed. Ideal for recording a demo video.
 
+![Demo: sign in, browse the shelf, open a book, request it, and add a new book - all running locally against the Firebase emulators](https://github.com/user-attachments/assets/39064757-eda6-4c50-aa45-e00e6b9774b9)
+
 Prerequisites: Node.js 22+ (verified on Node 22; some Firebase packages print engine warnings below Node 24, but install and the demo run fine) and Java 21+ (the Firebase emulators need Java).
 
 ```bash
@@ -245,5 +247,6 @@ structure of the folders is the standard best-practice structure for Redux.
   - `variables/`
   - `\_base.scss`
   - `\_variables.scss`
+
 
 
