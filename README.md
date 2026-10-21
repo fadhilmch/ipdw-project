@@ -1,6 +1,35 @@
 # BOOKIO | Free book-sharing made easy
 An endeavour for the *Interaction Programming and Dynamic Web* course, 2019 at KTH Royal Institute of Technology.
 
+
+## Run the demo (recordable MVP)
+
+One command runs the whole app locally against the Firebase Emulator Suite with seeded sample data - no Firebase project, Algolia account, or Google Maps key needed. Ideal for recording a demo video.
+
+Prerequisites: Node.js 20+ and Java 21+ (the Firebase emulators need Java).
+
+```bash
+npm install
+npm run demo
+```
+
+Then open http://localhost:5173.
+
+Sign in with a ready-made verified account:
+
+- `demo@bookio.dev` / `demo1234`
+- `seller@bookio.dev` / `demo1234`
+
+Or register a new account: after signing up, open http://localhost:9099/emulator/v1/projects/demo-bookio-test/oobCodes and follow the `verifyEmail` oobLink to confirm the address (the emulator does not send real email).
+
+A good recording flow: sign in -> browse the book shelf -> open a book -> request it -> see it under My Book History -> sign in as the other account -> add a new book -> watch it appear on the shelf.
+
+Demo mode details:
+
+- All data lives in the local emulators and vanishes when they stop; nothing touches a production project.
+- Without Algolia keys, the book shelf lists books straight from Firestore. Without a Google Maps key, a static placeholder replaces the map. Facebook login is hidden in demo mode.
+- To use the real backends instead, copy `.env.example` to `.env.local`, fill in your keys, and run `npm run dev`. The demo fallbacks switch off automatically when real keys are present.
+
 ## https://bookio-5c798.firebaseapp.com/
 
 BOOKIO is a book-sharing platform where any logged in user can lend out or give away a book for free. The platform requires the visitor to create a user profile, such that people have an idea whom they are interacting with. Users can create a post for renting out, or giving away, their book(s) and provide details such as time and location of pick-up. For an improved user experience, the user can search for a book using the Goodreads API. When a title is selected, the name of the author and the ratings the book got on Goodreads will be associated with it. The user can provide pictures of the book, as well as the pick up location and a descprition or recommendation. The application has a full-text search functionality, and the book overview page allows filtering by type.
