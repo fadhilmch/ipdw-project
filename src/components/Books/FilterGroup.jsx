@@ -9,7 +9,7 @@ const FilterGroup = props => {
     /* eslint-enable no-unused-vars */
 
     props.filters.reduce((pre, cur) => {
-      pre[cur] = {pushed: false};
+      pre[cur] = {pushed: true};
       return pre;
     }, {})
   );
@@ -19,6 +19,7 @@ const FilterGroup = props => {
       {props.filters.map(title => (
         <Button
           key={'filter' + title}
+          defaultPushed={true}
           onClick={() => {
             if (!props.onFilterUpdate || !filterStatus) {
               return;
