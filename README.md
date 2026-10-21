@@ -13,7 +13,7 @@ npm install
 npm run demo
 ```
 
-Then open http://localhost:5173.
+Then open the Local URL that Vite prints - http://localhost:5173 by default, or the next free port (e.g. 5174) if 5173 is already taken.
 
 Sign in with a ready-made verified account:
 
@@ -245,4 +245,5 @@ structure of the folders is the standard best-practice structure for Redux.
   - `variables/`
   - `\_base.scss`
   - `\_variables.scss`
+
 
