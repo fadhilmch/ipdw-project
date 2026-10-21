@@ -6,7 +6,6 @@ import {getDoc, addDoc, updateDoc} from 'firebase/firestore';
 import GoogleMap from '../components/GoogleMap/GoogleMap';
 import {useFirebase} from '../components/Firebase';
 import UserLabel from '../components/Books/UserLabel';
-import RatingStars from '../components/Books/RatingStars';
 import Button from '../components/Button/Button';
 
 import {Link} from 'react-router-dom';
@@ -126,8 +125,8 @@ const BookDetail = props => {
       {book.location && (
         <GoogleMap
           style={{
-            width: '250px',
-            height: '350px'
+            width: '100%',
+            height: '220px'
           }}
           coord={book.location}
           initCoord={book.location}
@@ -155,36 +154,39 @@ const BookDetail = props => {
 
   return (
     <div className="book-details-container">
-      <div className="book-details-page-header">
-        <div className="book-title">{book.title}</div>
-        <Link to={ROUTES.BOOKS} className="btn btn-orange">
-          To Books Overview
-        </Link>
+      <div className="det-cover">
+        {getImages()}
       </div>
-      <div className="book-info-container">
-        <div className="author">by {book.author}</div>
-        <div className="images">{getImages()}</div>
-        <div className="book-rating">
-          <span>Rating from GoodReads: </span>
-          <RatingStars rating={book.rating} />
+      <div className="det-info">
+        <div
+          className={
+            'det-type-pill' + (book.type === 'give' ? ' give-label' : '')
+          }>
+          {{lend: 'To Borrow', give: 'To Have'}[book.type]}
         </div>
-        <div className="header-description">Description </div>
-        <div className="book-description">{book.description}</div>
-      </div>
-      <div className="book-pickup-container">
-        <div className="header-pickup">Pickup Location </div>
-        {googleMap}
-        {ownerDetails}
-        {firebase.getMyUID() && firebase.getMyUID() !== book.ownerId && (
-          <Button
-            className={
-              'btn btn-black' +
-              (requestBtnTxt === 'Requested' ? ' btn-disabled' : '')
-            }
-            onClick={requestBook}
-            text={requestBtnTxt}
-          />
-        )}
+        <h1 className="det-title">{book.title}</h1>
+        <div className="det-author">{book.author}</div>
+        <div className="det-actions">
+          {firebase.getMyUID() && firebase.getMyUID() !== book.ownerId && (
+            <Button
+              className={
+                'btn det-btn-request' +
+                (requestBtnTxt === 'Requested' ? ' btn-disabled' : '')
+              }
+              onClick={requestBook}
+              text={requestBtnTxt === 'Requested' ? 'Requested' : 'Request this book'}
+            />
+          )}
+          <Link to={ROUTES.BOOKS} className="btn det-btn-back">
+            Back to shelf
+          </Link>
+        </div>
+        <p className="det-description">{book.description}</p>
+        <div className="det-panel">
+          <h3>Pickup location</h3>
+          {googleMap}
+          {ownerDetails}
+        </div>
       </div>
     </div>
   );
