@@ -63,12 +63,12 @@ await clearCollection('books');
 
 const stockholm = {lat: 59.33, lon: 18.06};
 const books = [
-  {title: 'The Pragmatic Programmer', author: 'David Thomas & Andrew Hunt', type: 'lend', owner: seller, ownerName: 'Demo Seller', seed: 'pragmatic', rating: 4.5, description: 'Classic software craftsmanship book. Good condition, a few dog-eared pages.'},
-  {title: 'Clean Code', author: 'Robert C. Martin', type: 'lend', owner: seller, ownerName: 'Demo Seller', seed: 'cleancode', rating: 4.2, description: 'A handbook of agile software craftsmanship. Like new.'},
-  {title: 'The Hobbit', author: 'J.R.R. Tolkien', type: 'give', owner: seller, ownerName: 'Demo Seller', seed: 'hobbit', rating: 4.8, description: 'Well-loved paperback, free to a good home.'},
-  {title: 'Sapiens', author: 'Yuval Noah Harari', type: 'lend', owner: reader, ownerName: 'Demo Reader', seed: 'sapiens', rating: 4.4, description: 'A brief history of humankind. Hardcover, great shape.'},
-  {title: 'Norwegian Wood', author: 'Haruki Murakami', type: 'give', owner: reader, ownerName: 'Demo Reader', seed: 'norwegian', rating: 4.1, description: 'Moving out, giving away my Murakami collection.'},
-  {title: 'The Design of Everyday Things', author: 'Don Norman', type: 'lend', owner: reader, ownerName: 'Demo Reader', seed: 'design', rating: 4.3, description: 'Revised edition. A must-read for anyone who makes things.'}
+  {title: 'The Pragmatic Programmer', isbn: '9780135957059', author: 'David Thomas & Andrew Hunt', type: 'lend', owner: seller, ownerName: 'Demo Seller', seed: 'pragmatic', rating: 4.5, description: 'Classic software craftsmanship book. Good condition, a few dog-eared pages.'},
+  {title: 'Clean Code', isbn: '9780132350884', author: 'Robert C. Martin', type: 'lend', owner: seller, ownerName: 'Demo Seller', seed: 'cleancode', rating: 4.2, description: 'A handbook of agile software craftsmanship. Like new.'},
+  {title: 'The Hobbit', isbn: '9780547928227', author: 'J.R.R. Tolkien', type: 'give', owner: seller, ownerName: 'Demo Seller', seed: 'hobbit', rating: 4.8, description: 'Well-loved paperback, free to a good home.'},
+  {title: 'Sapiens', isbn: '9780062316097', author: 'Yuval Noah Harari', type: 'lend', owner: reader, ownerName: 'Demo Reader', seed: 'sapiens', rating: 4.4, description: 'A brief history of humankind. Hardcover, great shape.'},
+  {title: 'Norwegian Wood', isbn: '9780375704024', author: 'Haruki Murakami', type: 'give', owner: reader, ownerName: 'Demo Reader', seed: 'norwegian', rating: 4.1, description: 'Moving out, giving away my Murakami collection.'},
+  {title: 'The Design of Everyday Things', isbn: '9780465050659', author: 'Don Norman', type: 'lend', owner: reader, ownerName: 'Demo Reader', seed: 'design', rating: 4.3, description: 'Revised edition. A must-read for anyone who makes things.'}
 ];
 
 const ownedBy = {[seller]: [], [reader]: []};
@@ -83,7 +83,7 @@ for (const [i, b] of books.entries()) {
     owner: str(b.ownerName),
     avatar: str(`https://picsum.photos/seed/${b.ownerName.replace(' ', '')}/200/200`),
     rating: {doubleValue: b.rating},
-    imageUrls: {arrayValue: {values: [str(`https://picsum.photos/seed/${b.seed}/400/600`)]}},
+    imageUrls: {arrayValue: {values: [str(`https://covers.openlibrary.org/b/isbn/${b.isbn}-L.jpg`)]}},
     location: {mapValue: {fields: {lat: dbl(stockholm.lat + i * 0.005), lon: dbl(stockholm.lon + i * 0.004)}}},
     createdAt: num(Date.now() - (books.length - i) * 86400000),
     updatedAt: num(Date.now() - (books.length - i) * 86400000)
