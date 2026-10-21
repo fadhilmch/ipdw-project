@@ -38,7 +38,9 @@ const PlacesAutocomplete = ({onPlaceSelected, className}) => {
       const place = autocomplete.getPlace();
       if (place && place.geometry) onPlaceSelected(place);
     });
-    return () => listener.remove();
+    return () => {
+      if (listener && listener.remove) listener.remove();
+    };
   }, [places, onPlaceSelected]);
 
   return <input ref={inputRef} className={className} type="text" />;
@@ -150,11 +152,36 @@ MapInner.propTypes = {
 };
 
 
-const GoogleMap = props => (
-  <APIProvider apiKey={apiKey}>
-    <MapInner {...props} />
-  </APIProvider>
-);
+// With no Maps browser key configured (demo mode), render a static
+// placeholder instead of a broken map.
+const mapsEnabled = Boolean(apiKey && apiKey !== 'dummy');
+
+const GoogleMap = props =>
+  mapsEnabled ? (
+    <APIProvider apiKey={apiKey}>
+      <MapInner {...props} />
+    </APIProvider>
+  ) : (
+    <div
+      className="google-map-container"
+      style={{
+        ...(props.style || {}),
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: '#e8ecef',
+        color: '#5f6b73',
+        fontSize: '13px',
+        textAlign: 'center',
+        padding: '12px',
+        borderRadius: '4px'
+      }}>
+      <span>
+        Map preview disabled. Add VITE_GOOGLE_MAPS_API_KEY to .env.local to
+        enable Google Maps.
+      </span>
+    </div>
+  );
 
 GoogleMap.propTypes = {
   getCoord: PropTypes.func,
