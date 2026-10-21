@@ -8,16 +8,22 @@ $field-height: 40px;
 
 .btn-add-book {
   &.account {
-    font-size: 30px;
     width: auto;
     position: relative;
     bottom: auto;
     right: auto;
     z-index: 1;
     height: $field-height;
-    font-size: 17px;
-    font-weight: bold;
-    background: $theme-dark-color;
+    font-size: 14px;
+    font-weight: 700;
+    background: $amber;
+    color: $amber-ink;
+    border-radius: 8px;
+    padding: 0 16px;
+
+    &:hover {
+      background: darken($amber, 6%);
+    }
   }
 }
 
