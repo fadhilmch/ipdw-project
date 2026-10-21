@@ -112,6 +112,9 @@ const BooksPage = props => {
 
   return (
     <React.Fragment>
+      <div className="shelf-head">
+        <h2>Community shelf</h2>
+      </div>
       <div className="books-tool-bar">
         <FilterGroup
           onFilterUpdate={filters => {
