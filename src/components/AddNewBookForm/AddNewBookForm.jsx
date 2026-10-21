@@ -43,9 +43,14 @@ const AddNewBookFormBase = props => {
   });
 
   const validationRef = useRef(null);
+  const submittedRef = useRef(false);
   let imageUrls = [];
 
   const onValidate = error => {
+    // After a successful publish the redux form state resets to empty, which
+    // would re-run the validators and flash false "required" errors during the
+    // redirect toast. Ignore validation results once a publish has succeeded.
+    if (submittedRef.current) return;
     dispatchError(error);
   };
 
@@ -73,6 +78,9 @@ const AddNewBookFormBase = props => {
   const updateImage = id => {
     return updateDoc(firebase.book(id), {imageUrls})
       .then(() => {
+        // Set before the success dispatch empties the form fields, so the
+        // validators that re-run on the cleared values stay silent.
+        submittedRef.current = true;
         addNewUserBook('success');
       });
   };
