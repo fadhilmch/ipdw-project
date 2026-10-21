@@ -81,7 +81,7 @@ for (const [i, b] of books.entries()) {
     type: str(b.type),
     ownerId: str(b.owner),
     owner: str(b.ownerName),
-    avatar: {nullValue: null},
+    avatar: str(`https://picsum.photos/seed/${b.ownerName.replace(' ', '')}/200/200`),
     rating: {doubleValue: b.rating},
     imageUrls: {arrayValue: {values: [str(`https://picsum.photos/seed/${b.seed}/400/600`)]}},
     location: {mapValue: {fields: {lat: dbl(stockholm.lat + i * 0.005), lon: dbl(stockholm.lon + i * 0.004)}}},
@@ -108,3 +108,4 @@ for (const [uid, username, email, myBooks] of [
   });
 }
 console.log(`seeded ${books.length} books`);
+
