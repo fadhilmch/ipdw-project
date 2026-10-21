@@ -35,7 +35,7 @@
   height: 30px;
   display: flex;
   align-items: center;
-  border-radius: $border-radius;
+  border-radius: 8px;
   font-size: 10px;
   margin-left: -7px;
 
@@ -52,5 +52,14 @@
     border: none;
     padding-left: 30px;
     width: 100%;
+    font-size: 14px;
+
+    @include media-breakpoint(sm) {
+      height: 38px;
+    }
+  }
+
+  @include media-breakpoint(sm) {
+    height: 38px;
   }
 }
