@@ -38,12 +38,12 @@
       &:hover {
         color: $ink;
       }
-    }
 
-    .on {
-      background: $theme-dark-color;
-      color: $white;
-      box-shadow: 0 2px 5px rgba(1, 70, 67, 0.35);
+      &[data-state='on'] {
+        background: $theme-dark-color;
+        color: $white;
+        box-shadow: 0 2px 5px rgba(1, 70, 67, 0.35);
+      }
     }
   }
 
