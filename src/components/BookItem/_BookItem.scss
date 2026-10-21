@@ -1,16 +1,18 @@
+// Book card - approved redesign direction: clean white card on light app
+// background, type pill on the cover, subtle raised 3D shadow (cards only).
 .book-item-container {
   max-width: 100%;
   width: 100%;
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  box-shadow: 1px 1px 4px 0 #9b9b9b;
-  border-radius: 6px;
-  max-height: 400px;
-  height: 350px;
-  transition: all 0.3s ease-in-out;
+  background: $white;
+  border: 1px solid $line-light;
+  border-radius: 12px;
   overflow: hidden;
+  text-decoration: none;
+  box-shadow: $card-shadow;
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
 
   @include media-breakpoint(sm) {
     max-width: 310px;
@@ -24,16 +26,16 @@
     max-width: 250px;
   }
 
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $card-shadow-hover;
+  }
+
   a {
     display: flex;
     flex-direction: column;
     text-decoration: none;
     height: 100%;
-  }
-
-  &:hover .book-item-img {
-    transform: scale(1.15);
-    transition: all 0.3s ease-in;
   }
 }
 
@@ -44,30 +46,104 @@
   display: none;
 }
 
+.book-item-img-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  overflow: hidden;
+  background: #dfe6e5;
+
+  .book-item-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+// Type pill overlaid on the cover
+.book-item-type {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.94);
+}
+
+.lend-label {
+  color: $theme-dark-color;
+  border: 1px solid $theme-dark-color;
+}
+
+.give-label {
+  color: #8a5a00;
+  border: 1px solid $amber;
+}
+
 .book-item-header {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 45px;
-  text-align: center;
-  margin-top: 6px;
+  padding: 14px 16px 4px;
+  text-align: left;
 
   .book-item-title {
-    font-size: 14px;
-    font-weight: 600;
-    margin: 0 $padding-sm;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    font-size: 15.5px;
+    font-weight: 700;
+    line-height: 1.3;
+    color: $ink;
+    margin: 0 0 3px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
     overflow: hidden;
+    min-height: 2.6em;
   }
 
   .book-item-author {
-    font-size: 14px;
-    margin: 0 $padding-sm;
+    font-size: 13px;
+    font-weight: 400;
+    color: $muted;
+    margin: 0;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
   }
+}
+
+.book-item-inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  margin: 0 16px 13px;
+  flex: 1 0 auto;
+
+  .book-item-inner-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid $line-light;
+    padding-top: 10px;
+    margin-top: 10px;
+
+    .user-label {
+      font-size: 12.5px;
+      color: $muted;
+    }
+  }
+}
+
+.book-item-distance-container {
+  display: flex;
+  align-items: center;
+  color: $muted;
+}
+.book-item-distance {
+  font-size: 12px;
+  padding-left: 4px;
 }
 
 .delete-book {
@@ -112,73 +188,4 @@
       color: rgb(212, 71, 71);
     }
   }
-}
-
-.book-item-img-container {
-  max-height: 175px;
-  height: 100%;
-  width: 100%;
-  border-radius: 6px 6px 0px 0px;
-  overflow: hidden;
-
-  .book-item-img {
-    max-height: 175px;
-    height: 100%;
-    width: 100%;
-    transition: all 0.3s ease-out;
-    animation-delay: 0.5s;
-    border-radius: 6px 6px 0px 0px;
-    object-fit: cover;
-  }
-}
-
-.book-item-inner {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  margin: 0px 12px 6px;
-  flex: 1 0 auto;
-
-  .book-item-inner-header {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .book-item-type {
-    text-transform: capitalize;
-    border-radius: 6px;
-    padding: 0px 5px;
-    color: white;
-    font-weight: bold;
-  }
-
-  .lend-label {
-    background: #a5a27c;
-  }
-  .give-label {
-    background: #a57ca5;
-  }
-
-  .book-item-inner-footer {
-    display: flex;
-    justify-content: space-between;
-    .user-label {
-      font-size: 12px;
-    }
-  }
-}
-
-.book-item-description {
-  margin: 3px 0;
-  font-size: 12px;
-  line-height: 16px;
-}
-
-.book-item-distance-container {
-  display: flex;
-  align-items: center;
-}
-.book-item-distance {
-  font-size: 12px;
-  padding-left: 4px;
 }
