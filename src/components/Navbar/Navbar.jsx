@@ -6,7 +6,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import * as ROUTES from '../../constants/routes';
 
 import BrandLogo from '../BrandLogo/BrandLogo';
-import Dropdown from '../Dropdown/Dropdown';
+import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import Search from '../Search/Search';
 import SignOut from '../Authentication/SignOut';
 
@@ -16,57 +16,43 @@ const bookShelfLink = (
   </Link>
 );
 
-const accountMenuList = [
-  {
-    id: 0,
-    title: (
-      <Link to={ROUTES.ACCOUNT}>
-        <FontAwesomeIcon icon="user" />
-        My Profile
-      </Link>
-    ),
-    classes: 'link section-ending'
-  },
-  {
-    id: 1,
-    title: (
-      <Link to={ROUTES.EDIT_PROFILE}>
-        <FontAwesomeIcon icon="edit" />
-        Edit Profile
-      </Link>
-    ),
-    classes: 'link section-ending'
-  },
-
-  {
-    id: 1,
-    title: (
-      <Link to={ROUTES.SETTINGS}>
-        <FontAwesomeIcon icon="cog" />
-        Settings
-      </Link>
-    ),
-    classes: 'link section-ending'
-  },
-  {
-    id: 5,
-    title: (
-      <React.Fragment>
-        <FontAwesomeIcon icon="sign-out-alt" />
-        <SignOut />
-      </React.Fragment>
-    ),
-    classes: 'link section-ending'
-  }
-];
-
 const accountMenu = (
-  <Dropdown
-    classes="navbar-account"
-    headerObject={<FontAwesomeIcon icon="user" />}
-    items={accountMenuList}
-    defaultShowMenu={false}
-  />
+  <DropdownMenu.Root modal={false}>
+    <DropdownMenu.Trigger asChild>
+      <button className="dd-header navbar-account navbar-account-trigger" aria-label="Account menu">
+        <FontAwesomeIcon icon="user" />
+      </button>
+    </DropdownMenu.Trigger>
+    <DropdownMenu.Portal>
+      <DropdownMenu.Content
+        className="dd-list navbar-account-menu"
+        align="end"
+        sideOffset={8}>
+        <DropdownMenu.Item asChild>
+          <Link to={ROUTES.ACCOUNT} className="dd-list-item link">
+            <FontAwesomeIcon icon="user" /> My Profile
+          </Link>
+        </DropdownMenu.Item>
+        <DropdownMenu.Item asChild>
+          <Link to={ROUTES.EDIT_PROFILE} className="dd-list-item link">
+            <FontAwesomeIcon icon="edit" /> Edit Profile
+          </Link>
+        </DropdownMenu.Item>
+        <DropdownMenu.Item asChild>
+          <Link to={ROUTES.SETTINGS} className="dd-list-item link">
+            <FontAwesomeIcon icon="cog" /> Settings
+          </Link>
+        </DropdownMenu.Item>
+        <DropdownMenu.Separator className="dd-separator" />
+        <DropdownMenu.Item asChild>
+          <div className="dd-list-item link dd-signout">
+            <FontAwesomeIcon icon="sign-out-alt" />
+            <SignOut />
+          </div>
+        </DropdownMenu.Item>
+      </DropdownMenu.Content>
+    </DropdownMenu.Portal>
+  </DropdownMenu.Root>
 );
 
 const NavbarAuth = ({authUser}) => (

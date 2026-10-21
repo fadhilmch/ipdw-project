@@ -1,48 +1,36 @@
-import React, {useState} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-
-import Button from '../Button/Button';
+import * as ToggleGroup from '@radix-ui/react-toggle-group';
 
 const FilterGroup = props => {
-  /* eslint-disable no-unused-vars */
-  const [filterStatus, setFilterStatus] = useState(
-    /* eslint-enable no-unused-vars */
-
-    props.filters.reduce((pre, cur) => {
-      pre[cur] = {pushed: false};
-      return pre;
-    }, {})
-  );
+  const handleValueChange = value => {
+    if (props.onFilterUpdate) {
+      props.onFilterUpdate(value);
+    }
+  };
 
   return (
-    <div className="filters">
+    <ToggleGroup.Root
+      className="filters"
+      type="multiple"
+      defaultValue={props.filters}
+      onValueChange={handleValueChange}>
       {props.filters.map(title => (
-        <Button
+        <ToggleGroup.Item
           key={'filter' + title}
-          onClick={() => {
-            if (!props.onFilterUpdate || !filterStatus) {
-              return;
-            }
-
-            filterStatus[title].pushed = !filterStatus[title].pushed;
-
-            props.onFilterUpdate(
-              Object.keys(filterStatus).filter(key => filterStatus[key].pushed)
-            );
-          }}
-          type="toggle"
+          value={title}
           className="filter-toggle"
-          text={title}
-        />
+          aria-label={`Filter ${title}`}>
+          {title}
+        </ToggleGroup.Item>
       ))}
-    </div>
+    </ToggleGroup.Root>
   );
 };
 
 FilterGroup.propTypes = {
   filters: PropTypes.array,
-  onBorrowFilter: PropTypes.func,
-  onHaveFilter: PropTypes.func
+  onFilterUpdate: PropTypes.func
 };
 
 export default FilterGroup;

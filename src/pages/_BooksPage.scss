@@ -1,17 +1,48 @@
+// Shelf heading - bookshelf identity
+.shelf-head {
+  padding: 24px 0 0;
+
+  h2 {
+    font-size: 21px;
+    font-weight: 900;
+    color: $ink;
+    margin: 0;
+  }
+}
+
+// Shelf toolbar - segmented filter control + amber Add Book CTA
 .books-tool-bar {
-  padding: 15px 0 25px;
+  padding: 18px 0 24px;
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
-  height: 80px;
+
   .filters {
-    .on {
-      background: $theme-light-color;
-    }
-    > * {
-      margin-right: 10px;
-      @include media-breakpoint(sm) {
-        margin-right: 20px;
+    display: inline-flex;
+    background: #e9e3d6;
+    border-radius: 999px;
+    padding: 4px;
+    gap: 4px;
+
+    .filter-toggle {
+      border: none;
+      background: transparent;
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 600;
+      color: $muted;
+      cursor: pointer;
+      box-shadow: none;
+
+      &:hover {
+        color: $ink;
+      }
+
+      &[data-state='on'] {
+        background: $theme-dark-color;
+        color: $white;
+        box-shadow: 0 2px 5px rgba(1, 70, 67, 0.35);
       }
     }
   }
@@ -22,16 +53,20 @@
 }
 
 .btn-add-book {
-  width: 156px;
-  height: 40px;
-  background-color: $theme-dark-color;
+  background-color: $amber;
+  color: $amber-ink;
+  border-radius: 8px;
+  padding: 9px 16px;
   align-items: center;
   display: flex;
   justify-content: center;
-  color: white;
   text-decoration: none;
-  font-size: 17px;
-  font-weight: bold;
+  font-size: 14px;
+  font-weight: 700;
+
+  &:hover {
+    background-color: darken($amber, 6%);
+  }
 
   @include smaller-than(sm) {
     .desktop {
@@ -45,9 +80,10 @@
     right: 6%;
     z-index: 998;
     height: 60px;
+    font-weight: 400;
   }
 
   .desktop {
-    margin-left: 10px;
+    margin-left: 8px;
   }
 }

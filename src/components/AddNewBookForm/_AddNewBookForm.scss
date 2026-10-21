@@ -1,38 +1,28 @@
 $description-height: 200px;
-$upload-font: 16px;
-$input-height: 40px;
-$abp-shadow: 0 3px 12px rgba(4, 5, 5, 0.5);
+$input-height: 44px;
 
+// Publish progress toast - legible solid banner (was a clipped, half
+// transparent overlay). Centered, fully opaque, above the navbar.
 .upload-progress {
   &.redirect {
-    transition: all 0.3s;
-    display: flex;
-    justify-content: center;
-    align-content: center;
     position: fixed;
-    z-index: 10;
-    left: 30%;
-    top: 40%;
-    background: black;
-    width: 40%;
-    height: 15%;
-    opacity: 0.6;
-    border-radius: 30px;
+    z-index: 2000;
+    left: 50%;
+    top: 30%;
+    transform: translateX(-50%);
+    background: $teal-darker;
+    border-radius: 12px;
+    padding: 22px 32px;
+    box-shadow: 0 12px 32px rgba(0, 40, 40, 0.35);
+    max-width: 90vw;
+    text-align: center;
 
     > h3 {
-      margin: 40px;
-      color: white;
-      font-size: 25px;
-      align-self: center;
-    }
-
-    @include smaller-than(sm) {
-      width: 60%;
-      left: 20%;
-      text-align: center;
-      > h3 {
-        font-size: 1rem;
-      }
+      margin: 0;
+      color: $white;
+      font-size: 17px;
+      font-weight: 600;
+      line-height: 1.5;
     }
   }
 
@@ -43,9 +33,8 @@ $abp-shadow: 0 3px 12px rgba(4, 5, 5, 0.5);
     position: fixed;
     top: $navbar-height;
     height: 4px;
-    box-shadow: 0 3px 12px rgba(4, 5, 5, 0.5);
     left: 0px;
-    background: yellow;
+    background: $amber;
 
     > h3 {
       display: none;
@@ -57,34 +46,53 @@ $abp-shadow: 0 3px 12px rgba(4, 5, 5, 0.5);
     z-index: 10;
     top: $navbar-height;
     height: 4px;
-    box-shadow: 0 3px 12px rgba(4, 5, 5, 0.5);
     left: 0px;
     width: 0px;
-    background: yellow;
+    background: $amber;
 
     > h3 {
       display: none;
     }
   }
 }
+
+// Add-book form - approved redesign: white section card, flat controls
+// (no shadows on inputs), amber publish action.
 .add-book-form {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  margin-top: -10px;
+  gap: 0 36px;
+  background: $white;
+  border: 1px solid $line-light;
+  border-radius: 12px;
+  padding: 24px 28px 28px;
+  margin-top: 24px;
 
-  input {
-    border: 1px solid $gray;
-    border-radius: 6px;
-    transition: box-shadow 0.08s ease-in, color 0.08s ease-in;
-    box-shadow: 0 0 0 1px $gray;
+  input,
+  select,
+  textarea {
+    border: 1.5px solid $line-light;
+    border-radius: 8px;
+    background: $white;
+    box-shadow: none;
+    font-size: 14px;
+    transition: border-color 0.15s ease;
 
     &:focus,
     &:active {
-      z-index: 2;
       outline: none;
-      box-shadow: $box-shadow;
+      border-color: $theme-light-color;
+      box-shadow: none;
     }
+  }
+
+  .validation-error {
+    background-color: transparent;
+    color: $dark-pink;
+    font-size: 12.5px;
+    padding: 4px 2px 0;
+    display: block;
   }
 
   .margin-bottom-10px {
@@ -92,7 +100,7 @@ $abp-shadow: 0 3px 12px rgba(4, 5, 5, 0.5);
   }
 
   .two-col {
-    width: 45%;
+    width: 46%;
     height: 100%;
 
     &:last-child {
@@ -104,13 +112,11 @@ $abp-shadow: 0 3px 12px rgba(4, 5, 5, 0.5);
     > .subtitle {
       border: none;
       background: none;
-      margin-top: $padding-sm;
-    }
-
-    .validation-error {
-      background-color: transparent;
-      padding: 0 25px;
+      margin-top: 14px;
+      margin-bottom: 6px;
       font-size: 13px;
+      font-weight: 600;
+      color: $ink;
     }
   }
 
@@ -121,13 +127,7 @@ $abp-shadow: 0 3px 12px rgba(4, 5, 5, 0.5);
   .booktype {
     width: 100%;
     height: $input-height;
-    background: #f8f8f8;
-    border: 1px solid $gray;
-    border-radius: 6px;
-    transition: box-shadow 0.08s ease-in, color 0.08s ease-in;
-    box-shadow: 0 0 0 1px rgba(155, 155, 155, 0.34);
-    padding: 0 $padding-sm;
-    font-size: 16px;
+    padding: 0 12px;
     outline: none;
 
     &:hover {
@@ -136,47 +136,42 @@ $abp-shadow: 0 3px 12px rgba(4, 5, 5, 0.5);
 
     option {
       outline: none;
-      font-size: 16px;
+      font-size: 14px;
     }
   }
 
   .btn-publish {
-    box-shadow: $button-shadow;
-    margin-top: 20px;
-    font-size: 17px;
-    font-weight: bold;
-    align-self: flex-end;
+    margin-top: 24px;
+    font-size: 15px;
+    font-weight: 700;
+    align-self: stretch;
     position: relative;
+    background: $amber;
+    color: $amber-ink;
+    border: none;
+    border-radius: 9px;
+    padding: 14px;
+    height: auto;
+    width: 100%;
+    box-shadow: none;
+
+    &:hover {
+      background: darken($amber, 6%);
+    }
   }
 
   .input-description {
     height: $description-height;
     resize: none;
-    border-radius: 10px;
-    padding: 20px $padding-sm;
-    font-size: 16px;
+    padding: 12px;
     width: 100%;
-    background-color: $white-dim;
-
-    &:focus {
-      background-color: $white;
-    }
+    font-family: inherit;
   }
 
   .title-input {
-    border: 1px solid $gray;
-
     width: 100%;
-    background: none;
     height: $input-height;
-    border-radius: 10px;
-    padding: 0 $padding-sm;
-    font-size: 16px;
-    background-color: #f8f8f8;
-
-    &:focus {
-      background-color: $white;
-    }
+    padding: 0 12px;
   }
 
   .google-map-container {
@@ -186,39 +181,24 @@ $abp-shadow: 0 3px 12px rgba(4, 5, 5, 0.5);
   }
 
   .autocomplete-input {
-    border: 1px solid $gray;
-    border-radius: 6px;
-    transition: box-shadow 0.08s ease-in, color 0.08s ease-in;
-    box-shadow: 0 0 0 1px $gray;
     height: $input-height;
     width: 100%;
-    background-color: #f8f8f8;
-    font-size: 17px;
-    padding: 0px 20px;
-    margin-bottom: 50px;
-
-    &:focus {
-      background-color: $white;
-    }
-
-    &:focus,
-    &:active {
-      z-index: 2;
-      outline: none;
-      box-shadow: $box-shadow;
-    }
+    font-size: 14px;
+    padding: 0 12px;
+    margin-bottom: 20px;
   }
 
   @include smaller-than(sm) {
     justify-content: flex-start;
     flex-direction: column;
+    padding: 20px 18px;
 
     .two-col {
       width: 100%;
     }
 
     .input-description {
-      height: 100px;
+      height: 110px;
     }
   }
 }

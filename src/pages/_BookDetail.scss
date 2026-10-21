@@ -1,135 +1,157 @@
+// Book detail - approved redesign: cover left with raised shadow, info right,
+// amber primary action, white panel for pickup.
 .book-details-container {
-  margin: 0 0 $padding-lg;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  align-items: flex-start;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  padding: 28px 0 48px;
 
-  .book-info-container {
+  @include media-breakpoint(sm) {
+    grid-template-columns: 280px 1fr;
+    gap: 36px;
+  }
+}
+
+.det-cover {
+  .images {
     display: flex;
     flex-direction: column;
-    flex-basis: 100%;
-
-    @include media-breakpoint(sm) {
-      flex-basis: 60%;
-      max-width: 60%;
-    }
-  }
-
-  .book-pickup-container {
-    flex-basis: 100%;
-    text-align: left;
-    margin-top: $padding-sm;
-
-    @include media-breakpoint(sm) {
-      flex-basis: 20%;
-    }
-  }
-
-  .book-title {
-    flex-grow: 1;
-    margin-top: $padding-xs;
-    color: $gray-lighter;
-    font-size: 25px;
-    margin-bottom: $padding-xs;
-    order: 2;
-
-    @include media-breakpoint(sm) {
-      order: 1;
-    }
-  }
-
-  .btn-orange {
-    order: 1;
-    background: $orange;
-    @include media-breakpoint(sm) {
-      order: 2;
-    }
-  }
-
-  .author {
-    font-size: 14px;
-    text-align: left;
-    color: $gray-lighter;
-    padding-bottom: 4px;
+    gap: 16px;
   }
 
   .book-img {
-    width: 100%;
-    object-fit: cover;
-    margin-right: $padding-xs;
-    margin-bottom: $padding-xs;
-    max-height: 300px;
+    width: 100% !important;
+    max-width: 280px;
+    border-left: 7px solid $book-spine;
+    border-radius: 4px 10px 10px 4px;
+    box-shadow: -8px 0 0 -4px rgba(0, 0, 0, 0.15),
+      18px 24px 40px -12px rgba(29, 43, 41, 0.5);
+    display: block;
+    margin: 0 auto;
 
     @include media-breakpoint(sm) {
-      max-height: 400px;
-    }
-  }
-
-  .book-rating {
-    display: flex;
-
-    span {
-      padding-right: $padding-xxs;
-    }
-  }
-
-  .header-description {
-    margin-top: $padding-sm;
-    margin-bottom: $padding-xxs;
-    font-size: 18px;
-    font-weight: 600;
-    color: $gray-lighter;
-  }
-
-  .book-description {
-    color: $gray-lighter;
-    font-size: 17px;
-    text-align: justify;
-  }
-
-  .header-pickup {
-    width: fit-content;
-    font-size: 17px;
-    font-weight: 600;
-    text-align: left;
-    color: $gray-lighter;
-    margin-bottom: $padding-xs;
-  }
-
-  .google-map-wrapper {
-    height: 350px;
-    width: 250px;
-    text-align: right;
-    margin-top: $padding-xs;
-    margin-bottom: $padding-xs;
-
-    @include media-breakpoint(sm) {
-      text-align: center;
-    }
-
-    > div {
-      > div {
-        &:first-child {
-          height: 350px !important;
-          width: 250px !important;
-        }
-      }
+      margin: 0;
     }
   }
 }
 
-.book-details-page-header {
-  display: flex;
-  flex: 1 0 100%;
-  align-items: flex-start;
-  justify-content: space-between;
-  padding-top: $padding-xs;
-  flex-direction: column;
+.det-info {
+  min-width: 0;
+}
 
-  @include media-breakpoint(sm) {
-    flex-direction: row;
-    align-items: center;
+.det-type-pill {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 20px;
+  color: $theme-dark-color;
+  border: 1.5px solid $theme-dark-color;
+  background: $white;
+
+  &.give-label {
+    color: #8a5a00;
+    border-color: $amber;
+  }
+}
+
+.det-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: $ink;
+  margin: 10px 0 2px;
+}
+
+.det-author {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  font-size: 15px;
+  color: $muted;
+  margin-bottom: 10px;
+}
+
+.det-rating {
+  margin-bottom: 6px;
+}
+
+.det-actions {
+  display: flex;
+  gap: 12px;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+
+.btn.det-btn-request {
+  background: $amber;
+  color: $amber-ink;
+  border-radius: 9px;
+  padding: 12px 26px;
+  height: auto;
+  font-size: 15px;
+  font-weight: 700;
+  border: none;
+
+  &.btn-disabled {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+}
+
+.btn.det-btn-back {
+  background: $white;
+  border: 1.5px solid $line-light;
+  color: $ink;
+  border-radius: 9px;
+  padding: 12px 26px;
+  height: auto;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.det-description {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  font-size: 15.5px;
+  line-height: 1.7;
+  color: #31403d;
+  max-width: 52ch;
+  border-left: 4px solid $amber;
+  padding: 4px 0 4px 18px;
+}
+
+.det-panel {
+  margin-top: 26px;
+  border: 1px solid $paper-line;
+  border-radius: 14px;
+  padding: 18px 20px;
+  background: $card-cream;
+  box-shadow: 0 2px 10px rgba(29, 43, 41, 0.06);
+
+  h3 {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: $muted;
+    margin: 0 0 12px;
+  }
+
+  .google-map-wrapper {
+    margin-bottom: 14px;
+    width: 100%;
+    height: auto;
+
+    iframe,
+    > div {
+      border-radius: 8px;
+      width: 100% !important;
+      max-width: 100%;
+      height: 220px !important;
+    }
+  }
+
+  .owner-field {
+    font-size: 13.5px;
+    color: $muted;
   }
 }
