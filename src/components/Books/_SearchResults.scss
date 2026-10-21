@@ -1,52 +1,16 @@
-$grid-offset-2-cls: 50px;
-$grid-offset-3-cls: 35px;
-$grid-offset-4-cls: 35px;
-
+// Shelf grid - approved redesign: even responsive grid, generous gaps.
 .search-result {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
   width: 100%;
 
   @include media-breakpoint(sm) {
-    width: calc(100% + #{$grid-offset-2-cls});
-  }
-
-  @include media-breakpoint(md) {
-    width: calc(100% + #{$grid-offset-3-cls});
-  }
-
-  @include media-breakpoint(lg) {
-    width: calc(100% + #{$grid-offset-4-cls});
-  }
-
-  &:after {
-    content: '';
-    flex: auto;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 22px;
   }
 
   > * {
     text-decoration: none;
-    flex: 1 0 auto;
-    margin-bottom: 30px;
-
-    @include media-breakpoint(sm) {
-      margin-right: #{$grid-offset-2-cls};
-    }
-
-    @include media-breakpoint(md) {
-      margin-right: #{$grid-offset-3-cls};
-    }
-
-    @include media-breakpoint(lg) {
-      margin-right: #{$grid-offset-4-cls};
-    }
-  }
-
-  @include smaller-than(sm) {
-    flex-direction: column;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    align-items: center;
   }
 }
