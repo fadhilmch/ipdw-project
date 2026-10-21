@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "test": "vitest run --exclude '**/*.emulator.test.jsx'",
     "lint": "eslint src",
-    "test:emulator": "firebase emulators:exec --only auth,firestore,storage 'vitest run **/*.emulator.test.jsx'",
+    "test:emulator": "firebase emulators:exec --only auth,firestore,storage 'vitest run emulator.emulator.test'",
     "demo": "node scripts/demo.mjs"
   },
   "dependencies": {
