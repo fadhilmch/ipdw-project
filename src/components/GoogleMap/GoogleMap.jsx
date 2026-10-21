@@ -169,16 +169,17 @@ const GoogleMap = props =>
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: '#e8ecef',
-        color: '#5f6b73',
+        background: '#fafbfa',
+        color: '#667777',
         fontSize: '13px',
         textAlign: 'center',
-        padding: '12px',
-        borderRadius: '4px'
+        padding: '22px',
+        borderRadius: '8px',
+        border: '1.5px dashed #c3cdc9'
       }}>
       <span>
-        Map preview disabled. Add VITE_GOOGLE_MAPS_API_KEY to .env.local to
-        enable Google Maps.
+        Map preview unavailable in this demo build - add a Google Maps key to
+        show the pickup point.
       </span>
     </div>
   );
