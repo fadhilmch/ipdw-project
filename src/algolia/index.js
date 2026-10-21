@@ -1,8 +1,17 @@
 import {algoliasearch} from 'algoliasearch';
 
+// Search is only enabled with real keys configured. Demo mode (`npm run
+// demo`) leaves them empty and the books list falls back to Firestore.
+export const algoliaEnabled = Boolean(
+  import.meta.env.VITE_ALGOLIA_APP_ID &&
+    import.meta.env.VITE_ALGOLIA_APP_ID !== 'dummy' &&
+    import.meta.env.VITE_ALGOLIA_SEARCH_KEY &&
+    import.meta.env.VITE_ALGOLIA_SEARCH_KEY !== 'dummy'
+);
+
 const client = algoliasearch(
-  import.meta.env.VITE_ALGOLIA_APP_ID,
-  import.meta.env.VITE_ALGOLIA_SEARCH_KEY
+  import.meta.env.VITE_ALGOLIA_APP_ID || 'demo-disabled',
+  import.meta.env.VITE_ALGOLIA_SEARCH_KEY || 'demo-disabled'
 );
 
 // algoliasearch v5: single-flight index helpers via client methods

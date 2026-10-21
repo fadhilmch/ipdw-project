@@ -91,11 +91,16 @@ const SignUpFormBase = props => {
           return firebase.doSendEmailVerification();
         })
         .catch(error => {
-          if (error.code === ERROR_CODE_ACCOUNT_EXISTS) {
-            error.message = ERROR_MSG_ACCOUNT_EXISTS;
-          }
-
-          dispatchError(error);
+          // Dispatch a plain object: Error fields like .message are
+          // non-enumerable and would be dropped by Object.assign in the
+          // reducer, rendering an empty "ERROR:" line.
+          dispatchError({
+            code: error.code || 'error',
+            message:
+              error.code === ERROR_CODE_ACCOUNT_EXISTS
+                ? ERROR_MSG_ACCOUNT_EXISTS
+                : error.message || String(error)
+          });
         });
 
       e.preventDefault();

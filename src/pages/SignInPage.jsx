@@ -15,8 +15,12 @@ const SignInPage = () => (
 
     <div className="auth-page-body">
       <SignInForm />
-      <div className="spacer">OR</div>
-      <SignInFacebook />
+      {import.meta.env.VITE_USE_EMULATORS !== 'true' && (
+        <>
+          <div className="spacer">OR</div>
+          <SignInFacebook />
+        </>
+      )}
     </div>
 
     <div className="sign-in-sign-up-link">

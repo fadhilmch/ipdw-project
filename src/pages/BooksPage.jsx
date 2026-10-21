@@ -19,15 +19,41 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import Loader from '../components/Loader/Loader';
 import SearchResults from '../components/Books/SearchResults';
 import FilterGroup from '../components/Books/FilterGroup';
-import {algoliaIndex} from '../algolia';
+import {algoliaIndex, algoliaEnabled} from '../algolia';
+import {useFirebase} from '../components/Firebase';
+import {getDocs} from 'firebase/firestore';
 import Pagination from '../components/Pagination/Pagination';
 
 const BooksPage = props => {
   const initialCoords = {lat: 0, lng: 0};
   const [totalPages, setTotalPages] = useState(1);
+  const firebase = useFirebase();
+  const demoMode = import.meta.env.VITE_USE_EMULATORS === 'true';
+
+  // Explicit demo mode only (`npm run demo`, VITE_USE_EMULATORS=true):
+  // list books straight from the emulator Firestore. Production builds
+  // without Algolia keys keep their previous behavior - this never
+  // broadens reads against a production backend.
+  const getBooksFromFirestore = filter => {
+    getDocs(firebase.books())
+      .then(snap => {
+        let books = snap.docs.map(d => ({id: d.id, ...d.data()}));
+        const typeMatch = /type:(lend|give)/.exec(filter || '');
+        if (typeMatch) books = books.filter(b => b.type === typeMatch[1]);
+        props.storeBooks(withDistance(books, props.coords));
+        setTotalPages(1);
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  };
 
   const onFilter = filter => {
     props.storeSearchQuery(filter);
+    if (demoMode && !algoliaEnabled) {
+      getBooksFromFirestore(filter);
+      return;
+    }
     algoliaIndex
       .search('', {
         filters: filter,
@@ -43,6 +69,10 @@ const BooksPage = props => {
   };
 
   const getBooks = () => {
+    if (demoMode && !algoliaEnabled) {
+      getBooksFromFirestore(props.query);
+      return;
+    }
     algoliaIndex
       .search('')
       .then(res => {

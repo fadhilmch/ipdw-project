@@ -61,7 +61,7 @@ const SignInFacebookBase = props => {
           error.message = ERROR_MSG_ACCOUNT_EXISTS;
         }
 
-        dispatchError(error);
+        dispatchError({code: error.code || 'error', message: error.message || String(error)});
       });
 
     e.preventDefault();
@@ -105,7 +105,7 @@ const SignInFormBase = props => {
   };
 
   const onValidate = error => {
-    dispatchError(error);
+    dispatchError({code: error.code || 'error', message: error.message || String(error)});
   };
 
   const onSubmit = e => {
@@ -116,7 +116,7 @@ const SignInFormBase = props => {
         navigate(ROUTES.ACCOUNT);
       })
       .catch(error => {
-        dispatchError(error);
+        dispatchError({code: error.code || 'error', message: error.message || String(error)});
       });
 
     e.preventDefault();

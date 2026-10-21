@@ -4,6 +4,7 @@
 import {initializeApp} from 'firebase/app';
 import {
   getAuth,
+  connectAuthEmulator,
   FacebookAuthProvider,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -17,14 +18,15 @@ import {
 } from 'firebase/auth';
 import {
   getFirestore,
+  connectFirestoreEmulator,
   doc,
   collection,
   getDoc,
   onSnapshot,
   FieldValue
 } from 'firebase/firestore';
-import {getStorage, ref as storageRef, getDownloadURL} from 'firebase/storage';
-import {algoliaIndex} from '../algolia';
+import {getStorage, ref as storageRef, getDownloadURL, connectStorageEmulator} from 'firebase/storage';
+import {algoliaIndex, algoliaEnabled} from '../algolia';
 
 const config = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -47,6 +49,15 @@ class Firebase {
     this.auth = getAuth(this.app);
     this.db = getFirestore(this.app);
     this.storage = getStorage(this.app);
+    // Demo mode (VITE_USE_EMULATORS=true, used by `npm run demo`): talk only
+    // to the local Firebase Emulator Suite. No production project is touched.
+    if (import.meta.env.VITE_USE_EMULATORS === 'true') {
+      connectAuthEmulator(this.auth, 'http://localhost:9099', {
+        disableWarnings: true
+      });
+      connectFirestoreEmulator(this.db, 'localhost', 8180);
+      connectStorageEmulator(this.storage, 'localhost', 9299);
+    }
     this.myUID = null;
     this.facebookProvider = new FacebookAuthProvider();
   }
@@ -145,6 +156,9 @@ class Firebase {
   };
 
   addOrUpdateIndexRecord(dataSnapshot) {
+    // Explicit demo mode only: skip search indexing (no Algolia keys).
+    // Outside demo mode behavior is unchanged from the merged version.
+    if (import.meta.env.VITE_USE_EMULATORS === 'true' && !algoliaEnabled) return;
     const firebaseObject = dataSnapshot.data();
     firebaseObject.objectID = dataSnapshot.id;
     algoliaIndex.saveObject(firebaseObject).catch(err => {

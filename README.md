@@ -1,6 +1,39 @@
 # BOOKIO | Free book-sharing made easy
 An endeavour for the *Interaction Programming and Dynamic Web* course, 2019 at KTH Royal Institute of Technology.
 
+
+## Run the demo (recordable MVP)
+
+One command runs the whole app locally against the Firebase Emulator Suite with seeded sample data - no Firebase project, Algolia account, or Google Maps key needed. Ideal for recording a demo video.
+
+![Demo: sign in, browse the shelf, open a book, request it, and add a new book - all running locally against the Firebase emulators](https://github.com/user-attachments/assets/39064757-eda6-4c50-aa45-e00e6b9774b9)
+
+Prerequisites: Node.js 22+ (verified on Node 22; some Firebase packages print engine warnings below Node 24, but install and the demo run fine) and Java 21+ (the Firebase emulators need Java).
+
+```bash
+npm install
+npm run demo
+```
+
+Then open the Local URL that Vite prints - http://localhost:5173 by default, or the next free port (e.g. 5174) if 5173 is already taken.
+
+Sign in with a ready-made verified account:
+
+- `demo@bookio.dev` / `demo1234`
+- `seller@bookio.dev` / `demo1234`
+
+Or register a new account: after signing up, open http://localhost:9099/emulator/v1/projects/demo-bookio-test/oobCodes and follow the `verifyEmail` oobLink to confirm the address (the emulator does not send real email).
+
+A good recording flow: sign in -> browse the book shelf -> open a book -> request it -> see it under My Book History -> sign in as the other account -> add a new book -> watch it appear on the shelf.
+
+Demo mode details:
+
+- All data lives in the local emulators and vanishes when they stop; nothing touches a production project.
+- Without Algolia keys, the book shelf lists books straight from Firestore. Without a Google Maps key, a static placeholder replaces the map. Facebook login is hidden in demo mode.
+- Book photos and user avatars in the seed data are random placeholder images from picsum.photos, not real book covers - fetching real covers would need the Goodreads/Algolia keys the demo avoids.
+- Running the test suite (`npx vitest run`) shares the emulator auth store: the emulator tests create a fixed account, so they pass once per fresh emulator. Restart the emulators (or delete the accounts via the Auth emulator REST endpoint) before re-running tests.
+- To use the real backends instead, copy `.env.example` to `.env.local`, fill in your keys, and run `npm run dev`. The demo fallbacks switch off automatically when real keys are present.
+
 ## https://bookio-5c798.firebaseapp.com/
 
 BOOKIO is a book-sharing platform where any logged in user can lend out or give away a book for free. The platform requires the visitor to create a user profile, such that people have an idea whom they are interacting with. Users can create a post for renting out, or giving away, their book(s) and provide details such as time and location of pick-up. For an improved user experience, the user can search for a book using the Goodreads API. When a title is selected, the name of the author and the ratings the book got on Goodreads will be associated with it. The user can provide pictures of the book, as well as the pick up location and a descprition or recommendation. The application has a full-text search functionality, and the book overview page allows filtering by type.
@@ -214,3 +247,6 @@ structure of the folders is the standard best-practice structure for Redux.
   - `variables/`
   - `\_base.scss`
   - `\_variables.scss`
+
+
+
