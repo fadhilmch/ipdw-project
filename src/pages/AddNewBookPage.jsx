@@ -84,12 +84,14 @@ const AddNewBookBase = props => {
           Go to Books Discovery
         </Link>
       </div>
-      <div className="subtitle">Images</div>
-      <div className="image-box-container">
-        {files.map((file, i) => {
-          return ImageBox(file, i);
-        })}
-        <DragAndDrop handleDrop={handleDrop} />
+      <div className="add-book-images-section">
+        <div className="subtitle">Images</div>
+        <div className="image-box-container">
+          {files.map((file, i) => {
+            return ImageBox(file, i);
+          })}
+          <DragAndDrop handleDrop={handleDrop} />
+        </div>
       </div>
       <AddNewBookForm files={files} />
     </div>
