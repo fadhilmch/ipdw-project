@@ -9,7 +9,6 @@ import {useFirebase} from '../Firebase';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import Numeral from 'numeral';
 
-import RatingStars from '../Books/RatingStars';
 import UserLabel from '../Books/UserLabel';
 
 import {algoliaIndex} from '../../algolia';
@@ -96,27 +95,19 @@ const BookItem = props => {
           src={props.bookImgSrc}
           alt={props.bookTitle}
         />
+        <div
+          className={
+            'book-item-type' +
+            (props.type === 'give' ? ' give-label' : ' lend-label')
+          }>
+          {{lend: 'To Borrow', give: 'To Have'}[props.type]}
+        </div>
       </div>
       <div className="book-item-header">
         <h3 className="book-item-title">{props.bookTitle}</h3>
         <h3 className="book-item-author">{props.authorName}</h3>
       </div>
-      <div className="book-item-inner">
-        <div className="book-item-inner-header">
-          <RatingStars rating={props.rating} />
-          <div
-            className={
-              'book-item-type' +
-              (props.type === 'give' ? ' give-label' : ' lend-label')
-            }>
-            {{lend: 'To Borrow', give: 'To Have'}[props.type]}
-          </div>
-        </div>
-        <p className="book-item-description">
-          {props.bookDescription.substring(0, 100) + '...'}
-        </p>
-        {!props.accountPage && booksPageOnly}
-      </div>
+      <div className="book-item-inner">{!props.accountPage && booksPageOnly}</div>
     </Link>
   );
 };
